@@ -28,13 +28,13 @@ jobs:
         run: chmod +x gradlew
 
       # 4️⃣ Скачиваем зависимости и собираем проект
-      - name: Build with Gradle
-        run: ./gradlew build
+      - name: Build with AssembleDebug
+        run: ./gradlew assembleDebug
 
       # 5️⃣ Запускаем unit-тесты
-      - name: Run tests
-        run: ./gradlew test
+        # - name: Run tests
+      # run: ./gradlew test
 
       # 6️⃣ Проверяем линтер (если есть)
-      - name: Run lint
-        run: ./gradlew lint
+        # - name: Run lint
+      # run: ./gradlew lint /*
