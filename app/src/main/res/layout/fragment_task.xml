@@ -16,11 +16,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:id="@+id/img_status"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/circle_icon"
         app:layout_constraintBottom_toBottomOf="@+id/text_note"
         app:layout_constraintEnd_toStartOf="@+id/text_note" />
@@ -45,7 +45,6 @@
         app:layout_constraintBottom_toBottomOf="@id/text_note"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/text_note"
-        app:layout_constraintTop_toTopOf="@id/text_note"
-    />
+        app:layout_constraintTop_toTopOf="@id/text_note" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
