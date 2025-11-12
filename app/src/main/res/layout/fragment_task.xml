@@ -11,7 +11,7 @@
         android:id="@+id/edit_note"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="пишем сюда заметки"
+        android:hint="@string/exam_hintEdit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,13 +26,13 @@
         app:layout_constraintEnd_toStartOf="@+id/text_note" />
 
     <TextView
-        android:layout_marginStart="40dp"
         android:id="@+id/text_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
         android:text="@string/example_for_text"
         android:textSize="20sp"
-        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_note" />
 
