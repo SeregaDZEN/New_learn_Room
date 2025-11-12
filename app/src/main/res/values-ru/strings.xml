@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Project_notes_room</string>
+    <string name="example_for_text">Привет Влад и Саня</string>
+    <string name="exam_hintEdit">пишем сюда заметки</string>
+</resources>
