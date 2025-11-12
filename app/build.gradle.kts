@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    namespace = "ru.netology.project_notes_room"
+    namespace = "ru.serega.testNotes"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "ru.netology.project_notes_room"
+        applicationId = "ru.serega.project_notes_room"
         minSdk = 21
         targetSdk = 36
         versionCode = 1

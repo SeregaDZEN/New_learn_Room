@@ -1,4 +1,4 @@
-package ru.netology.project_notes_room
+package ru.serega.testNotes
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -17,6 +17,4 @@ class MainActivity : AppCompatActivity() {
             insets
         }
     }
-
-
 }

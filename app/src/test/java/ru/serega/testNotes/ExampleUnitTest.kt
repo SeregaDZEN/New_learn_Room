@@ -1,4 +1,4 @@
-package ru.netology.project_notes_room
+package ru.serega.testNotes
 
 import org.junit.Test
 

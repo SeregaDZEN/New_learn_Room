@@ -3,9 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_con_view_task"
-    android:name="ru.netology.project_notes_room.TaskFragment"
+    android:name="ru.serega.testNotes.TaskFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    
 </androidx.fragment.app.FragmentContainerView>
