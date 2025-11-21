@@ -8,8 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class NoteAdapter() :
+class NoteAdapter(private val onEditClick: (Note) -> Unit) :
     RecyclerView.Adapter<NoteAdapter.NotesHolder>() {
+
     var data = listOf<Note>()
         set(value) {
             field = value
@@ -21,7 +22,7 @@ class NoteAdapter() :
     fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NotesHolder = NotesHolder.inflateFrom(parent)
+    ): NotesHolder = NotesHolder.inflateFrom(parent, onEditClick)
 
 
     override fun onBindViewHolder(
@@ -34,36 +35,31 @@ class NoteAdapter() :
 
     override fun getItemCount(): Int = data.size
 
-    class NotesHolder(item: View) : RecyclerView.ViewHolder(item) {
+    class NotesHolder(item: View,  private val onEditClick: (Note) -> Unit) : RecyclerView.ViewHolder(item) {
         val textHolder = item.findViewById<TextView>(R.id.text_note)
 
         val imageHolder = item.findViewById<ImageView>(R.id.img_status)
-        val imageButtonHolder = item.findViewById<ImageButton>(R.id.button_note)
+        val imageButtonHolder = item.findViewById<ImageButton>(R.id.button_change)
 
 
         fun bind(item: Note) {
             textHolder.text = item.text
-            textHolder.setOnClickListener {
-                imageHolder.isSelected = !imageHolder.isSelected
-            }
-
             imageHolder.setImageResource(item.iconRes)
             imageButtonHolder.setOnClickListener {
-
+                onEditClick(item)
             }
+
         }
 
 
         companion object {
-            fun inflateFrom(parent: ViewGroup): NotesHolder {
+            fun inflateFrom(parent: ViewGroup, onEditClick: (Note) -> Unit): NotesHolder {
                 val layoutInflate = LayoutInflater.from(parent.context)
                 val view = layoutInflate.inflate(R.layout.item_note, parent, false)
-                return NotesHolder(view)
+                return NotesHolder(view, onEditClick)
 
             }
         }
 
     }
-
-
 }

@@ -1,10 +1,11 @@
 package ru.serega.testNotes
 
 object NotesData : NotesRepository {
+    private var nextId = 0
     private val _notes = mutableListOf<Note>()
 
-    private var nextId = 0
-    override fun getNotes(): List<Note> = _notes
+    override fun getNotes() = _notes
+
 
 
     override fun addNote(text: String, iconRes: Int) {
@@ -21,7 +22,5 @@ object NotesData : NotesRepository {
         if (index != -1) {
             _notes[index] = note
         }
-
-
     }
 }
