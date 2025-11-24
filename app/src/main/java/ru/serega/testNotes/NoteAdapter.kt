@@ -8,7 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class NoteAdapter(private val onEditClick: (Note) -> Unit) :
+class NoteAdapter(
+    private val onEditClick: (Note) -> Unit,
+
+) :
     RecyclerView.Adapter<NoteAdapter.NotesHolder>() {
 
     var data = listOf<Note>()
@@ -24,6 +27,7 @@ class NoteAdapter(private val onEditClick: (Note) -> Unit) :
         viewType: Int
     ): NotesHolder = NotesHolder.inflateFrom(parent, onEditClick)
 
+    override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(
         holder: NotesHolder,
@@ -33,24 +37,29 @@ class NoteAdapter(private val onEditClick: (Note) -> Unit) :
         holder.bind(note)
     }
 
-    override fun getItemCount(): Int = data.size
+    class NotesHolder(
+        item: View,
+        private val onEditClick: (Note) -> Unit,
 
-    class NotesHolder(item: View,  private val onEditClick: (Note) -> Unit) : RecyclerView.ViewHolder(item) {
-        val textHolder = item.findViewById<TextView>(R.id.text_note)
+        ) : RecyclerView.ViewHolder(item) {
+        private val textNote = item.findViewById<TextView>(R.id.text_note)
+        private val imgStatus = item.findViewById<ImageView>(R.id.img_status)
+        private val btnEdit = item.findViewById<ImageButton>(R.id.button_change)
 
-        val imageHolder = item.findViewById<ImageView>(R.id.img_status)
-        val imageButtonHolder = item.findViewById<ImageButton>(R.id.button_change)
 
+        fun bind(note: Note) {
+            textNote.text = note.text
 
-        fun bind(item: Note) {
-            textHolder.text = item.text
-            imageHolder.setImageResource(item.iconRes)
-            imageButtonHolder.setOnClickListener {
-                onEditClick(item)
+            imgStatus.isSelected = note.isDone
+
+            textNote.setOnClickListener {
+                note.isDone = !note.isDone
+                imgStatus.isSelected = note.isDone
             }
-
+            btnEdit.setOnClickListener {
+                onEditClick(note)
+            }
         }
-
 
         companion object {
             fun inflateFrom(parent: ViewGroup, onEditClick: (Note) -> Unit): NotesHolder {

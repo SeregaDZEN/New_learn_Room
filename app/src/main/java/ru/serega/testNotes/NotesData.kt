@@ -1,5 +1,8 @@
 package ru.serega.testNotes
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+
 object NotesData : NotesRepository {
     private var nextId = 0
     private val _notes = mutableListOf<Note>()
@@ -7,12 +10,12 @@ object NotesData : NotesRepository {
     override fun getNotes() = _notes
 
 
-
     override fun addNote(text: String, iconRes: Int) {
         val note = Note(nextId++, text, iconRes, false)
         _notes.add(note)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun deleteNote(id: Int) {
         _notes.removeIf { it.id == id }
     }
