@@ -32,20 +32,20 @@ class TaskFragment : Fragment() {
         }
 
         recView?.adapter = adapter
-        adapter.data = NotesData.getNotes().toList()
+        adapter.submitList(NotesData.getNotes().toList())
 
         addView?.setOnClickListener {
             val text = editView?.text.toString()
             if (text.isNotEmpty()) {
                 NotesData.addNote(text, iconRes = R.drawable.circle_icon)
-                adapter.data = NotesData.getNotes().toList()
+                adapter.submitList(NotesData.getNotes().toList())
                 editView?.setText("")
             }
         }
         return view
     }
 
-    private fun showEditDialog(note: Note) {
+    private fun showEditDialog(note: NoteModel) {
         val edit = EditText(requireContext())
         edit.setText(note.text)
 
@@ -55,7 +55,7 @@ class TaskFragment : Fragment() {
             .setPositiveButton("Save") { _, _ ->
                 val updated = note.copy(text = edit.text.toString())
                 notes.updateNote(updated)
-                adapter.data = notes.getNotes().toList()
+                adapter.submitList( NotesData.getNotes().toList())
             }
             .setNegativeButton("Cancel", null)
             .show()

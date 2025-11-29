@@ -5,22 +5,22 @@ import androidx.annotation.RequiresApi
 
 object NotesData : NotesRepository {
     private var nextId = 0
-    private val _notes = mutableListOf<Note>()
+    private var _notes = mutableListOf<NoteModel>()
 
     override fun getNotes() = _notes
 
 
     override fun addNote(text: String, iconRes: Int) {
-        val note = Note(nextId++, text, iconRes, false)
+        val note = NoteModel(nextId++, text, iconRes, false)
         _notes.add(note)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
+
     override fun deleteNote(id: Int) {
-        _notes.removeIf { it.id == id }
+        _notes= _notes.filterNot { it.id == id }.toMutableList()
     }
 
-    override fun updateNote(note: Note) {
+    override fun updateNote(note: NoteModel) {
         val index = _notes.indexOfFirst { it.id == note.id }
         if (index != -1) {
             _notes[index] = note

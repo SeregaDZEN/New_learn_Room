@@ -7,18 +7,13 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 
 class NoteAdapter(
-    private val onEditClick: (Note) -> Unit,
+    private val onEditClick: (NoteModel) -> Unit,
 
-) :
-    RecyclerView.Adapter<NoteAdapter.NotesHolder>() {
+) : ListAdapter<NoteModel, NoteAdapter.NotesHolder>(NoteDiffItemCallback()) {
 
-    var data = listOf<Note>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
     override
 
@@ -27,19 +22,18 @@ class NoteAdapter(
         viewType: Int
     ): NotesHolder = NotesHolder.inflateFrom(parent, onEditClick)
 
-    override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(
         holder: NotesHolder,
         position: Int
     ) {
-        val note = data[position]
+        val note = getItem(position)
         holder.bind(note)
     }
 
     class NotesHolder(
         item: View,
-        private val onEditClick: (Note) -> Unit,
+        private val onEditClick: (NoteModel) -> Unit,
 
         ) : RecyclerView.ViewHolder(item) {
         private val textNote = item.findViewById<TextView>(R.id.text_note)
@@ -47,7 +41,7 @@ class NoteAdapter(
         private val btnEdit = item.findViewById<ImageButton>(R.id.button_change)
 
 
-        fun bind(note: Note) {
+        fun bind(note: NoteModel) {
             textNote.text = note.text
 
             imgStatus.isSelected = note.isDone
@@ -62,7 +56,7 @@ class NoteAdapter(
         }
 
         companion object {
-            fun inflateFrom(parent: ViewGroup, onEditClick: (Note) -> Unit): NotesHolder {
+            fun inflateFrom(parent: ViewGroup, onEditClick: (NoteModel) -> Unit): NotesHolder {
                 val layoutInflate = LayoutInflater.from(parent.context)
                 val view = layoutInflate.inflate(R.layout.item_note, parent, false)
                 return NotesHolder(view, onEditClick)
