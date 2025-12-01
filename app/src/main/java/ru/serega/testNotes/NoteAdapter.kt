@@ -9,10 +9,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ListAdapter
 
-class NoteAdapter(
-    private val onEditClick: (NoteModel) -> Unit,
 
-) : ListAdapter<NoteModel, NoteAdapter.NotesHolder>(NoteDiffItemCallback()) {
+interface NoteClickListener {
+    fun onEditClick(note: NoteModel)
+    fun onTextClick(note: NoteModel, view: View)
+}
+
+class NoteAdapter(
+    private val listener: NoteClickListener,
+
+    ) : ListAdapter<NoteModel, NoteAdapter.NotesHolder>(NoteDiffItemCallback()) {
 
 
     override
@@ -20,7 +26,7 @@ class NoteAdapter(
     fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NotesHolder = NotesHolder.inflateFrom(parent, onEditClick)
+    ): NotesHolder = NotesHolder.inflateFrom(parent, listener )
 
 
     override fun onBindViewHolder(
@@ -33,9 +39,9 @@ class NoteAdapter(
 
     class NotesHolder(
         item: View,
-        private val onEditClick: (NoteModel) -> Unit,
+        private val listener: NoteClickListener
 
-        ) : RecyclerView.ViewHolder(item) {
+    ) : RecyclerView.ViewHolder(item) {
         private val textNote = item.findViewById<TextView>(R.id.text_note)
         private val imgStatus = item.findViewById<ImageView>(R.id.img_status)
         private val btnEdit = item.findViewById<ImageButton>(R.id.button_change)
@@ -47,19 +53,23 @@ class NoteAdapter(
             imgStatus.isSelected = note.isDone
 
             textNote.setOnClickListener {
+                listener.onTextClick(note, it)
                 note.isDone = !note.isDone
                 imgStatus.isSelected = note.isDone
+
+
             }
             btnEdit.setOnClickListener {
-                onEditClick(note)
+                listener.onEditClick(note)
             }
+
         }
 
         companion object {
-            fun inflateFrom(parent: ViewGroup, onEditClick: (NoteModel) -> Unit): NotesHolder {
+            fun inflateFrom(parent: ViewGroup, listener: NoteClickListener): NotesHolder {
                 val layoutInflate = LayoutInflater.from(parent.context)
                 val view = layoutInflate.inflate(R.layout.item_note, parent, false)
-                return NotesHolder(view, onEditClick)
+                return NotesHolder(view,listener )
 
             }
         }
