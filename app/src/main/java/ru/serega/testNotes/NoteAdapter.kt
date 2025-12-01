@@ -10,11 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ListAdapter
 
 
-interface NoteClickListener {
-    fun onEditClick(note: NoteModel)
-    fun onTextClick(note: NoteModel, view: View)
-}
-
 class NoteAdapter(
     private val listener: NoteClickListener,
 
