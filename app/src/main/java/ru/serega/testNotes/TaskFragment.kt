@@ -15,21 +15,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 
 
-class TaskFragment : Fragment(), NoteClickListener {
+class TaskFragment : Fragment(R.layout.fragment_task), NoteClickListener {
 
     private lateinit var adapter: NoteAdapter
     private val notes = NotesData
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val view = inflater.inflate(R.layout.fragment_task, container, false)
-
-        val recView = view?.findViewById<RecyclerView>(R.id.rcView)
-        val editView = view?.findViewById<EditText>(R.id.edit_note)
-        val addView = view?.findViewById<Button>(R.id.button_add)
+        val recView = view.findViewById<RecyclerView>(R.id.rcView)
+        val editView = view.findViewById<EditText>(R.id.edit_note)
+        val addView = view.findViewById<Button>(R.id.button_add)
 
         adapter = NoteAdapter (this)
 
@@ -47,7 +43,7 @@ class TaskFragment : Fragment(), NoteClickListener {
         }
 
 
-        return view
+
     }
 
     private fun showEditDialog(note: NoteModel) {
