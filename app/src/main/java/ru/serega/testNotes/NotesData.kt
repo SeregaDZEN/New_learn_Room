@@ -7,8 +7,8 @@ object NotesData : NotesRepository {
     private var nextId = 0
     private var _notes = mutableListOf<NoteModel>()
 
-    override fun getNotes() = _notes
 
+    override fun currentList(): List<NoteModel> = _notes.toList()
 
     override fun addNote(text: String, iconRes: Int) {
         val note = NoteModel(nextId++, text, iconRes, false)
