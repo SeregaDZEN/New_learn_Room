@@ -1,8 +1,5 @@
 package ru.serega.testNotes
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-
 object NotesData : NotesRepository {
     private var nextId = 0
     private var _notes = mutableListOf<NoteModel>()
