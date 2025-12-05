@@ -4,5 +4,7 @@ import android.view.View
 
 interface NoteClickListener {
     fun onEditClick(note: NoteModel)
-    fun onTextClick(note: NoteModel, view: View)
+    fun onStatusClick(note: NoteModel, view: View)
+    fun onTextClick(note: NoteModel)
+
 }

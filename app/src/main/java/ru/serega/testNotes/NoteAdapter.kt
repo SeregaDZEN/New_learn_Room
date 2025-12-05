@@ -21,7 +21,7 @@ class NoteAdapter(
     fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NotesHolder = NotesHolder.inflateFrom(parent, listener )
+    ): NotesHolder = NotesHolder.inflateFrom(parent, listener)
 
 
     override fun onBindViewHolder(
@@ -47,13 +47,16 @@ class NoteAdapter(
 
             imgStatus.isSelected = note.isDone
 
-            textNote.setOnClickListener {
-                listener.onTextClick(note, it)
+            imgStatus.setOnClickListener {
+                listener.onStatusClick(note, it)
                 note.isDone = !note.isDone
                 imgStatus.isSelected = note.isDone
-
-
             }
+
+            textNote.setOnClickListener {
+                listener.onTextClick(note)
+            }
+
             btnEdit.setOnClickListener {
                 listener.onEditClick(note)
             }
@@ -64,7 +67,7 @@ class NoteAdapter(
             fun inflateFrom(parent: ViewGroup, listener: NoteClickListener): NotesHolder {
                 val layoutInflate = LayoutInflater.from(parent.context)
                 val view = layoutInflate.inflate(R.layout.item_note, parent, false)
-                return NotesHolder(view,listener )
+                return NotesHolder(view, listener)
 
             }
         }

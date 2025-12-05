@@ -1,9 +1,11 @@
 package ru.serega.testNotes
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.HapticFeedbackConstants
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -33,6 +35,8 @@ class MainFragment : Fragment(R.layout.fragment_task), NoteClickListener {
         recView?.adapter = adapter
         adapter.submitList(NotesData.currentList())
 
+
+
         addView?.setOnClickListener {
             val text = editView?.text.toString()
             if (text.isNotEmpty()) {
@@ -50,12 +54,20 @@ class MainFragment : Fragment(R.layout.fragment_task), NoteClickListener {
         AlertDialog.Builder(requireContext())
             .setTitle("Edit note")
             .setView(edit)
-            .setPositiveButton("Save") { _, _ ->
+            .setPositiveButton("Save") { dialog, _ ->
                 val updated = note.copy(text = edit.text.toString())
                 notes.updateNote(updated)
                 adapter.submitList(NotesData.currentList())
+
+                val imm =
+                    requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(edit.windowToken, 0)
+
+                dialog.dismiss()
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
             .show()
     }
 
@@ -63,10 +75,12 @@ class MainFragment : Fragment(R.layout.fragment_task), NoteClickListener {
         showEditDialog(note)
     }
 
-    override fun onTextClick(note: NoteModel, view: View) {
+    override fun onStatusClick(note: NoteModel, view: View) {
+
+        // Вибрация на клик
+        view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
 
         val message = if (note.isDone) "'не выполнена'" else "'выполнена'"
-        view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
 
         //  Показываем Snackbar
         val snack = Snackbar.make(view, "Заметка c id: ${note.id} $message", Snackbar.LENGTH_SHORT)
@@ -87,6 +101,19 @@ class MainFragment : Fragment(R.layout.fragment_task), NoteClickListener {
 
         //  Показываем Snackbar
         snack.show()
+    }
+
+    override fun onTextClick(note: NoteModel) {
+        val fragment = EditNoteFragment().apply {
+            arguments = Bundle().apply {
+                putInt("note", note.id)
+            }
+        }
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_main, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
 
