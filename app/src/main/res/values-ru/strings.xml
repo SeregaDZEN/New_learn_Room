@@ -4,4 +4,6 @@
     <string name="example_for_text">Привет Влад и Саня</string>
     <string name="exam_hintEdit">пишем сюда заметки</string>
     <string name="save">сохр</string>
+    <string name="noteId">Айди: %1$d</string>
+    <string name="update">обнова</string>
 </resources>

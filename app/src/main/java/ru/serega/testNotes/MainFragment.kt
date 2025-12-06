@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 
 
-class MainFragment : Fragment(R.layout.fragment_task), NoteClickListener {
+class MainFragment : Fragment(R.layout.fragment_main), NoteClickListener {
 
     private lateinit var adapter: NoteAdapter
     private val notes = NotesData
@@ -44,6 +44,15 @@ class MainFragment : Fragment(R.layout.fragment_task), NoteClickListener {
                 adapter.submitList(NotesData.currentList())
                 editView?.setText("")
             }
+        }
+
+        parentFragmentManager.setFragmentResultListener(
+            "edit_result",
+            viewLifecycleOwner
+        ) { _, bundle ->
+            val updatedNote = bundle.getParcelable<NoteModel>("updated_note")!!
+            notes.updateNote(updatedNote)     // сохраняем в БД
+            adapter.submitList(notes.currentList()) // обновляем список
         }
     }
 
@@ -104,14 +113,14 @@ class MainFragment : Fragment(R.layout.fragment_task), NoteClickListener {
     }
 
     override fun onTextClick(note: NoteModel) {
-        val fragment = EditNoteFragment().apply {
+        val fragmentTwo = EditNoteFragment().apply {
             arguments = Bundle().apply {
                 putInt("note", note.id)
             }
         }
 
         parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_main, fragment)
+            .replace(R.id.fragment_main, fragmentTwo)
             .addToBackStack(null)
             .commit()
     }
