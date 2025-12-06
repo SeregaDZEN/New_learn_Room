@@ -3,4 +3,8 @@
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="example_for_text">Hello Vlad and Sanya</string>
     <string name="exam_hintEdit">write here notes</string>
+    <string name="save">save</string>
+    <string name="noteId">ID: %1$d</string>
+    <string name="update">update</string>
+
 </resources>
